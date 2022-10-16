@@ -1,5 +1,10 @@
 /// <reference types="vite/client" />
 
+declare module '*.scss' {
+  const content: Record<string, any> = {}
+  export default content
+}
+
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
@@ -23,4 +28,19 @@ type Resources<T = any> = {
     per_page: number,
     count: number
   }
+}
+type Resource<T> = {
+  resource: T
+}
+
+type ResourceError = {
+  errors: Record<string, string[]>
+}
+type Item = {
+  id: number
+  user_id: number
+  amount: number
+  tags_id: number[]
+  happen_at: string
+  kind: expenses | income
 }
