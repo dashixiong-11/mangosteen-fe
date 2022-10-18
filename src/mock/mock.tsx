@@ -12,7 +12,17 @@ const createId = () => {
   id += 1
   return id
 }
-
+export const mockTagShow: Mock = config =>{
+  const createTag = (attrs?: any) =>
+    ({
+      id: createId(),
+      name: faker.lorem.word(),
+      sign: faker.internet.emoji(),
+      kind: 'expenses',
+      ...attrs
+    })
+  return [200, {resource: createTag()}]
+}
 export const mockItemCreate: Mock = config => {
   return [200, {
     resource: {
