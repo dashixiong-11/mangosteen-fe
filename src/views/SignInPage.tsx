@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { defineComponent, PropType, reactive, ref } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import { MainLayout } from '../layouts/MainLayout';
 import { Button } from '../shared/Button';
 import { Form, FormItem } from '../shared/Form';
@@ -10,6 +9,7 @@ import { refreshMe } from '../shared/me';
 import { useRoute, useRouter } from 'vue-router';
 import s from './SignInPage.module.scss';
 import { useBool } from '../hooks/useBool';
+import { BackIcon } from '../shared/BackIcon';
 export const SignInPage = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
@@ -61,7 +61,7 @@ export const SignInPage = defineComponent({
       <MainLayout>{
         {
           title: () => '登录',
-          icon: () => <Icon name="left" />,
+          icon: () => <BackIcon />,
           default: () => (
             <div class={s.wrapper}>
               <div class={s.logo}>

@@ -9,6 +9,7 @@ import { Tags } from './Tags';
 import { InputPad } from './InputPad';
 import s from './ItemCreate.module.scss';
 import { http } from '../../shared/Http';
+import { BackIcon } from '../../shared/BackIcon';
 export const ItemCreate = defineComponent({
   props: {
     name: {
@@ -41,7 +42,7 @@ export const ItemCreate = defineComponent({
     return () => (
       <MainLayout class={s.layout}>{{
         title: () => '记一笔',
-        icon: () => <Icon name="left" class={s.navIcon} />,
+        icon: () => <BackIcon />,
         default: () => <>
           <div class={s.wrapper}>
           <Tabs v-model:selected={formData.kind} class={s.tabs}>
