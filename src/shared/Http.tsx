@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { mockItemCreate, mockSession, mockTagEdit, mockTagIndex, mockTagShow } from "../mock/mock";
+import { mockItemCreate, mockItemIndex, mockSession, mockTagEdit, mockTagIndex, mockTagShow } from "../mock/mock";
+
 
 
 
@@ -37,9 +38,9 @@ const mock = (response: AxiosResponse) => {
     && location.hostname !== '127.0.0.1'
     && location.hostname !== '192.168.3.27') { return false }
   switch (response.config?.params?._mock) {
-     case 'tagIndex':
-       [response.status, response.data] = mockTagIndex(response.config)
-       return true
+    case 'tagIndex':
+      [response.status, response.data] = mockTagIndex(response.config)
+      return true
     // case 'itemCreate':
     //   [response.status, response.data] = mockItemCreate(response.config)
     //   return true
@@ -59,6 +60,9 @@ const mock = (response: AxiosResponse) => {
       return true
     case 'tagEdit':
       [response.status, response.data] = mockTagEdit(response.config)
+      return true
+    case 'itemIndex':
+      [response.status, response.data] = mockItemIndex(response.config)
       return true
   }
   return false
@@ -89,12 +93,12 @@ http.instance.interceptors.response.use((response) => {
   }
 })
 
-http.instance.interceptors.response.use(response=>{
+http.instance.interceptors.response.use(response => {
   return response
 }, (error) => {
-  if(error.response){
+  if (error.response) {
     const axiosError = error as AxiosError
-    if(axiosError.response?.status === 429){
+    if (axiosError.response?.status === 429) {
       alert('你太频繁了')
     }
   }

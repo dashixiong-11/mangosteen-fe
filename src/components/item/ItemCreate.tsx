@@ -1,9 +1,8 @@
 import { AxiosError } from 'axios';
 import { Dialog } from 'vant';
-import { defineComponent, onMounted, PropType, reactive, ref } from 'vue';
+import { defineComponent, PropType, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { MainLayout } from '../../layouts/MainLayout';
-import { Icon } from '../../shared/Icon';
 import { Tabs, Tab } from '../../shared/Tabs';
 import { Tags } from './Tags';
 import { InputPad } from './InputPad';
@@ -45,12 +44,12 @@ export const ItemCreate = defineComponent({
         icon: () => <BackIcon />,
         default: () => <>
           <div class={s.wrapper}>
-          <Tabs v-model:selected={formData.kind} class={s.tabs}>
+            <Tabs v-model:selected={formData.kind} class={s.tabs}>
               <Tab name="支出" >
                 <Tags kind="expenses" v-model:selected={formData.tags_id[0]} />
               </Tab>
               <Tab name="收入">
-              <Tags kind="income" v-model:selected={formData.tags_id[0]} />
+                <Tags kind="income" v-model:selected={formData.tags_id[0]} />
               </Tab>
             </Tabs>
             <div class={s.inputPad_wrapper}>
