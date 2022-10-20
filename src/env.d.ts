@@ -37,10 +37,11 @@ type ResourceError = {
   errors: Record<string, string[]>
 }
 type Item = {
-  id: number
-  user_id: number
-  amount: number
-  tags_id: number[]
-  happen_at: string
+  id: number,
+  tags?: Tag[],
+  user_id: number,
+  amount: number,
+  tags_id: number[],
+  happen_at: string,
   kind: expenses | income
 }
