@@ -17,7 +17,7 @@ export const Tabs = defineComponent({
   emits: ['update:selected'],
   setup: (props, context) => {
     return () => {
-      const tabs = context.slots.default?.()
+      const tabs = context.slots.default?.().filter( t => t.type === Tab)
       if (!tabs) return () => null
       for (let i = 0; i < tabs.length; i++) {
         if (tabs[i].type !== Tab) {

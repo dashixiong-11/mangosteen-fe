@@ -1,5 +1,5 @@
 import { Overlay } from 'vant';
-import {  defineComponent, PropType, reactive, ref } from 'vue';
+import { defineComponent, PropType, reactive, ref } from 'vue';
 import { Form, FormItem } from '../shared/Form';
 import { OverlayIcon } from '../shared/Overlay';
 import { Tab, Tabs } from '../shared/Tabs';
@@ -28,6 +28,10 @@ export const TimeTabsLayout = defineComponent({
     rerenderOnSwitchTab: {
       type: Boolean,
       default: false
+    },
+    hideThisYear: {
+      type: Boolean,
+      default: false
     }
   },
   setup: (props, context) => {
@@ -37,7 +41,7 @@ export const TimeTabsLayout = defineComponent({
       start: new Time().format(),
       end: new Time().format()
     })
-    
+
     const customTime = reactive<{
       start?: string
       end?: string
@@ -74,7 +78,7 @@ export const TimeTabsLayout = defineComponent({
           icon: () => <OverlayIcon />,
           default: () => <>
             <Tabs classPrefix='customTabs' v-model:selected={refSelected.value}
-                          onUpdate:selected={onSelect} rerenderOnSelect={props.rerenderOnSwitchTab}>
+              onUpdate:selected={onSelect} rerenderOnSelect={props.rerenderOnSwitchTab}>
               <Tab name="本月">
                 <props.component
                   startDate={timeList[0].start.format()}
@@ -85,11 +89,13 @@ export const TimeTabsLayout = defineComponent({
                   startDate={timeList[1].start.format()}
                   endDate={timeList[1].end.format()} />
               </Tab>
-              <Tab name="今年">
+              {
+                !props.hideThisYear && <Tab name="今年">
                 <props.component
                   startDate={timeList[2].start.format()}
                   endDate={timeList[2].end.format()} />
               </Tab>
+              }
               <Tab name="自定义时间">
                 <props.component
                   startDate={customTime.start}
