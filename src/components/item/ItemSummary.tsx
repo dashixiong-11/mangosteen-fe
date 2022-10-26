@@ -30,7 +30,7 @@ export const ItemSummary = defineComponent({
         happen_after: props.startDate,
         happen_before: props.endDate,
         page: page.value + 1,
-      },{
+      }, {
         _mock: 'itemIndex',
       })
       const { resources, pager } = response.data
@@ -48,7 +48,7 @@ export const ItemSummary = defineComponent({
         happen_after: props.startDate,
         happen_before: props.endDate,
         page: page.value + 1,
-      },{
+      }, {
         _mock: 'itemIndexBalance',
         _autoLoading: true
       })
@@ -56,7 +56,7 @@ export const ItemSummary = defineComponent({
     })
     return () => (
       <div class={s.wrapper}>
-        {(items.value && items.value.length>0) ? (
+        {(items.value && items.value.length > 0) ? (
           <>
             <ul class={s.total}>
               <li>
@@ -97,17 +97,17 @@ export const ItemSummary = defineComponent({
           </>
         ) : (
           <>
-          <Center class={s.pig_wrapper}>
-            <Icon name="pig" class={s.pig} />
-          </Center>
-          <div class={s.button_wrapper}>
-            <RouterLink to="/items/create">
-              <Button class={s.button}>开始记账</Button>
-            </RouterLink>
-          </div>
-        </>
+            <Center class={s.pig_wrapper}>
+              <Icon name="pig" class={s.pig} />
+            </Center>
+            <div class={s.button_wrapper}>
+              <RouterLink to="/items/create">
+                <Button class={s.button}>开始记账</Button>
+              </RouterLink>
+            </div>
+          </>
         )}
- <RouterLink to="/items/create">
+        <RouterLink to="/items/create">
           <FloatButton iconName='add' />
         </RouterLink>
       </div>
