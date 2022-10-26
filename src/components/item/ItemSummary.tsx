@@ -46,6 +46,7 @@ export const ItemSummary = defineComponent({
         page: page.value + 1,
       },{
         _mock: 'itemIndexBalance',
+        _autoLoading: true
       })
       Object.assign(itemsBalance, response.data)
     })
