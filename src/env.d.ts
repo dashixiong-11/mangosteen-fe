@@ -18,7 +18,7 @@ type Tag = {
   user_id: number,
   name: string,
   sign: string,
-  kind: expenses | income
+  kind: 'expenses' | 'income';
 }
 
 type Resources<T = any> = {
@@ -41,8 +41,8 @@ type Item = {
   tags?: Tag[],
   user_id: number,
   amount: number,
-  tags_id: number[],
   happen_at: string,
+  tag_ids: number[];
   kind: expenses | income
 }
 
@@ -50,3 +50,5 @@ type User = {
   id: number;
   email: string;
 }
+
+type FormErrors<T> = {[K in keyof typeof T]: string[]}
