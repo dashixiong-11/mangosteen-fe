@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, reactive, ref } from 'vue'
+import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue'
 import { Button } from '../../shared/Button'
 import { Datetime } from '../../shared/Datetime'
 import { FloatButton } from '../../shared/FloatButton'
@@ -32,6 +32,7 @@ export const ItemSummary = defineComponent({
         page: page.value + 1,
       }, {
         _mock: 'itemIndex',
+        _autoLoading: true,
       })
       const { resources, pager } = response.data
       items.value?.push(...resources)
@@ -39,6 +40,14 @@ export const ItemSummary = defineComponent({
       page.value += 1
     }
     onMounted(fetchItems)
+
+    watch(() => [props.startDate, props.endDate], () => {
+      items.value = []
+      hasMore.value = false
+      page.value = 0
+      fetchItems()
+    })
+
     const itemsBalance = reactive({
       expenses: 0, income: 0, balance: 0
     })
@@ -76,11 +85,11 @@ export const ItemSummary = defineComponent({
               {items.value.map((item) => (
                 <li>
                   <div class={s.sign}>
-                    <span>{item.tags![0].sign}</span>
+                    <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : '💰'}</span>
                   </div>
                   <div class={s.text}>
                     <div class={s.tagAndAmount}>
-                      <span class={s.tag}>{item.tags![0].name}</span>
+                      <span class={s.tag}>{item.tags && item.tags.length > 0 ? item.tags[0].name : '未分类'}</span>
                       <span class={s.amount}>￥<Money value={item.amount} /></span>
                     </div>
                     <div class={s.time}><Datetime value={item.happen_at} /></div>
