@@ -1,17 +1,18 @@
-import { defineComponent, reactive, ref } from 'vue';
 import { MainLayout } from '../layouts/MainLayout';
+import { defineComponent, reactive, ref } from 'vue';
+import { useMeStore } from '../stores/useMeStore';
 import { Button } from '../shared/Button';
 import { Form, FormItem } from '../shared/Form';
 import { Icon } from '../shared/Icon';
 import { hasError, validate } from '../shared/validate';
 import { http } from '../shared/Http';
-import { refreshMe } from '../shared/me';
 import { useRoute, useRouter } from 'vue-router';
 import s from './SignInPage.module.scss';
 import { useBool } from '../hooks/useBool';
 import { BackIcon } from '../shared/BackIcon';
 export const SignInPage = defineComponent({
   setup: (props, context) => {
+    const meStore = useMeStore()
     const formData = reactive({
       email: '2788347834@qq.com',
       code: ''
@@ -39,7 +40,7 @@ export const SignInPage = defineComponent({
         localStorage.setItem('jwt',response.data.jwt)
         // router.push('/sign_in?return_to='+ encodeURIComponent(route.fullPath))
         const returnTo = route.query.return_to?.toString()
-        refreshMe()
+        meStore.refreshMe()
         router.push(returnTo || '/')
       }
     }

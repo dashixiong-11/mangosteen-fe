@@ -6,6 +6,7 @@ specifiers:
   '@vitejs/plugin-vue-jsx': 2.0.0
   axios: ^0.27.2
   echarts: 5.3.2
+  pinia: 2.0.16
   sass: 1.49.11
   svgo: 2.8.0
   svgstore: 3.0.1
@@ -31,6 +32,7 @@ devDependencies:
   '@faker-js/faker': 7.5.0
   '@vitejs/plugin-vue': 3.0.0_vite@3.0.0+vue@3.2.31
   '@vitejs/plugin-vue-jsx': 2.0.0_vite@3.0.0+vue@3.2.31
+  pinia: 2.0.16_hhks2xcoho7x4jrwn5stbz36vy
   typescript: 4.6.3
   vite: 3.0.0_sass@1.49.11
   vite-plugin-style-import: 1.4.1_vite@3.0.0
@@ -698,7 +700,6 @@ packages:
 
   /@vue/devtools-api/6.1.4:
     resolution: {integrity: sha512-IiA0SvDrJEgXvVxjNkHPFfDx6SXw0b/TUkqMcDZWNg9fnCAHbTpoo59YfJ9QLFkwa3raau5vSlRVzMSLDnfdtQ==}
-    dev: false
 
   /@vue/reactivity-transform/3.2.31:
     resolution: {integrity: sha512-uS4l4z/W7wXdI+Va5pgVxBJ345wyGFKvpPYtdSgvfJfX/x2Ymm6ophQlXXB6acqGHtXuBqNyyO3zVp9b1r0MOA==}
@@ -1620,6 +1621,24 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
+  /pinia/2.0.16_hhks2xcoho7x4jrwn5stbz36vy:
+    resolution: {integrity: sha512-9/LMVO+/epny1NBfC77vnps4g3JRezxhhoF1xLUk8mZkUIxVnwfEAIRiAX8mYBTD/KCwZqnDMqXc8w3eU0FQGg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.1.4
+      typescript: 4.6.3
+      vue: 3.2.31
+      vue-demi: 0.13.11_vue@3.2.31
+    dev: true
+
   /postcss/8.4.12:
     resolution: {integrity: sha512-lg6eITwYe9v6Hr5CncVbK70SoioNQIq81nsaG86ev5hAidQvmOeETBqs7jm43K2F5/Ley3ytDtriImV6TpNiSg==}
     engines: {node: ^10 || ^12 || >=14}
@@ -2096,6 +2115,21 @@ packages:
       vscode-languageserver-textdocument: 1.0.4
       vscode-pug-languageservice: 0.29.8
       vscode-typescript-languageservice: 0.29.8
+    dev: true
+
+  /vue-demi/0.13.11_vue@3.2.31:
+    resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.2.31
     dev: true
 
   /vue-router/4.0.14_vue@3.2.31:
