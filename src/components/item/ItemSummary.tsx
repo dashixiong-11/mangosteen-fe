@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue'
+import { defineComponent, PropType, reactive, watch } from 'vue'
 import { Button } from '../../shared/Button'
 import { Datetime } from '../../shared/Datetime'
 import { FloatButton } from '../../shared/FloatButton'
@@ -9,7 +9,6 @@ import { Center } from '../../shared/Center'
 import { RouterLink } from 'vue-router'
 import { useAfterMe } from '../../hooks/useAfterMe'
 import { useItemStore } from '../../stores/useItemStore'
-import { useMeStore } from '../../stores/useMeStore'
 import { Icon } from '../../shared/Icon'
 
 export const ItemSummary = defineComponent({
@@ -95,7 +94,7 @@ export const ItemSummary = defineComponent({
             </ol>
             <div class={s.more}>
               {itemStore.hasMore ?
-                <Button onClick={() => itemStore.fetchItems(props.startDate, props.endDate)}>加载更多</Button> :
+                <Button onClick={() => itemStore.fetchNextPage(props.startDate, props.endDate)}>加载更多</Button> :
                 <span>没有更多</span>
               }
             </div>
