@@ -8,6 +8,7 @@ import s from './ItemSummary.module.scss'
 import { Center } from '../../shared/Center'
 import { RouterLink } from 'vue-router'
 import { useAfterMe } from '../../hooks/useAfterMe'
+import { useItemStore } from '../../stores/useItemStore'
 import { useMeStore } from '../../stores/useMeStore'
 import { Icon } from '../../shared/Icon'
 
@@ -23,53 +24,44 @@ export const ItemSummary = defineComponent({
     }
   },
   setup: (props, context) => {
-    const items = ref<Item[]>([])
-    const hasMore = ref(false)
-    const page = ref(0)
-    const fetchItems = async () => {
-      if (!props.startDate || !props.endDate) { return }
-      const response = await http.get<Resources<Item>>('/items', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
-        page: page.value + 1,
-      }, {
-        _mock: 'itemIndex',
-        _autoLoading: true,
-      })
-      const { resources, pager } = response.data
-      items.value?.push(...resources)
-      hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
-      page.value += 1
+    if (!props.startDate || !props.endDate) {
+      return () => <div>请先选择时间范围</div>
     }
-    useAfterMe(fetchItems)
+    const itemStore = useItemStore(['items', props.startDate, props.endDate])
+    useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate))
 
-
-    watch(() => [props.startDate, props.endDate], () => {
-      items.value = []
-      hasMore.value = false
-      page.value = 0
-      fetchItems()
-    })
+    watch(
+      () => [props.startDate, props.endDate],
+      () => {
+        itemStore.reset()
+        itemStore.fetchItems()
+      }
+    ) 
 
     const itemsBalance = reactive({
       expenses: 0, income: 0, balance: 0
     })
-    const fetchItemsBalance =async ()=>{
-      if(!props.startDate || !props.endDate){ return }
-      const response = await http.get('/items/balance', {
-        happen_after: props.startDate,
-        happen_before: props.endDate,
-        page: page.value + 1,
-      }, {
-        _mock: 'itemIndexBalance',
-      })
+    const fetchItemsBalance = async () => {
+      if (!props.startDate || !props.endDate) {
+        return
+      }
+      const response = await http.get(
+        '/items/balance',
+        {
+          happen_after: props.startDate,
+          happen_before: props.endDate
+        },
+        {
+          _mock: 'itemIndexBalance'
+        }
+      )
       Object.assign(itemsBalance, response.data)
     }
     useAfterMe(fetchItemsBalance)
 
     return () => (
       <div class={s.wrapper}>
-        {(items.value && items.value.length > 0) ? (
+        {itemStore.items && itemStore.items.length > 0 ? (
           <>
             <ul class={s.total}>
               <li>
@@ -86,7 +78,7 @@ export const ItemSummary = defineComponent({
               </li>
             </ul>
             <ol class={s.list}>
-              {items.value.map((item) => (
+            {itemStore.items.map((item) => (
                 <li>
                   <div class={s.sign}>
                     <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : '💰'}</span>
@@ -102,8 +94,8 @@ export const ItemSummary = defineComponent({
               ))}
             </ol>
             <div class={s.more}>
-              {hasMore.value ?
-                <Button onClick={fetchItems}>加载更多</Button> :
+              {itemStore.hasMore ?
+                <Button onClick={() => itemStore.fetchItems(props.startDate, props.endDate)}>加载更多</Button> :
                 <span>没有更多</span>
               }
             </div>
