@@ -7,6 +7,8 @@ import { Money } from '../../shared/Money'
 import s from './ItemSummary.module.scss'
 import { Center } from '../../shared/Center'
 import { RouterLink } from 'vue-router'
+import { useAfterMe } from '../../hooks/useAfterMe'
+import { useMeStore } from '../../stores/useMeStore'
 import { Icon } from '../../shared/Icon'
 
 export const ItemSummary = defineComponent({
@@ -39,7 +41,8 @@ export const ItemSummary = defineComponent({
       hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
       page.value += 1
     }
-    onMounted(fetchItems)
+    useAfterMe(fetchItems)
+
 
     watch(() => [props.startDate, props.endDate], () => {
       items.value = []
@@ -51,18 +54,19 @@ export const ItemSummary = defineComponent({
     const itemsBalance = reactive({
       expenses: 0, income: 0, balance: 0
     })
-    onMounted(async () => {
-      if (!props.startDate || !props.endDate) { return }
+    const fetchItemsBalance =async ()=>{
+      if(!props.startDate || !props.endDate){ return }
       const response = await http.get('/items/balance', {
         happen_after: props.startDate,
         happen_before: props.endDate,
         page: page.value + 1,
       }, {
         _mock: 'itemIndexBalance',
-        _autoLoading: true
       })
       Object.assign(itemsBalance, response.data)
-    })
+    }
+    useAfterMe(fetchItemsBalance)
+
     return () => (
       <div class={s.wrapper}>
         {(items.value && items.value.length > 0) ? (
