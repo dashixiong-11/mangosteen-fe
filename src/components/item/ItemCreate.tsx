@@ -7,6 +7,7 @@ import { Tabs, Tab } from '../../shared/Tabs';
 import { Tags } from './Tags';
 import { InputPad } from './InputPad';
 import s from './ItemCreate.module.scss';
+import { hasError, validate } from '../../shared/validate'
 import { http } from '../../shared/Http';
 import { BackIcon } from '../../shared/BackIcon';
 export const ItemCreate = defineComponent({
