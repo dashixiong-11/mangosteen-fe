@@ -32,7 +32,7 @@ export const ItemSummary = defineComponent({
         itemStore.$reset()
         itemStore.fetchItems(props.startDate, props.endDate)
       }
-    ) 
+    )
 
     const itemsBalance = reactive({
       expenses: 0, income: 0, balance: 0
@@ -58,7 +58,7 @@ export const ItemSummary = defineComponent({
     return () => (
       !props.startDate || !props.endDate ? (
         <div>请先选择时间范围</div>
-      ): <div class={s.wrapper}>
+      ) : <div class={s.wrapper}>
         {itemStore.items && itemStore.items.length > 0 ? (
           <>
             <ul class={s.total}>
@@ -76,7 +76,7 @@ export const ItemSummary = defineComponent({
               </li>
             </ul>
             <ol class={s.list}>
-            {itemStore.items.map((item) => (
+              {itemStore.items.map((item) => (
                 <li>
                   <div class={s.sign}>
                     <span>{item.tags && item.tags.length > 0 ? item.tags[0].sign : '💰'}</span>
@@ -100,7 +100,7 @@ export const ItemSummary = defineComponent({
           </>
         ) : (
           <>
-            <Center class={s.pig_wrapper}>
+            <Center class={s.pig_wrapper} direction="|">
               <Icon name="pig" class={s.pig} />
             </Center>
             <div class={s.button_wrapper}>
