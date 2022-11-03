@@ -23,9 +23,6 @@ export const ItemSummary = defineComponent({
     }
   },
   setup: (props, context) => {
-    if (!props.startDate || !props.endDate) {
-      return () => <div>请先选择时间范围</div>
-    }
     const itemStore = useItemStore(['items', props.startDate, props.endDate])
     useAfterMe(() => itemStore.fetchItems(props.startDate, props.endDate))
 
@@ -33,7 +30,7 @@ export const ItemSummary = defineComponent({
       () => [props.startDate, props.endDate],
       () => {
         itemStore.$reset()
-        itemStore.fetchItems()
+        itemStore.fetchItems(props.startDate, props.endDate)
       }
     ) 
 
@@ -59,7 +56,9 @@ export const ItemSummary = defineComponent({
     useAfterMe(fetchItemsBalance)
 
     return () => (
-      <div class={s.wrapper}>
+      !props.startDate || !props.endDate ? (
+        <div>请先选择时间范围</div>
+      ): <div class={s.wrapper}>
         {itemStore.items && itemStore.items.length > 0 ? (
           <>
             <ul class={s.total}>
